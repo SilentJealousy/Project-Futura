@@ -1,0 +1,49 @@
+{
+  "locked_choice": {
+    "text": "The door is locked. Do you want to try to pick it?",
+    "window": {
+      "background": "dim"
+    },
+    "choice": {
+      "choices": [
+          "Yes",
+          "No"
+        ],
+      "default": 1,
+      "canel": 1,
+      "variable": 3
+    }
+  },
+
+  "locked tried": {
+    "text": "You tried, but failed."
+  },
+
+  "statue": {
+    "text": "This is a statue of some guy who did a thing that was pretty cool and important, but we forgot all about him, so we just kinda made a suit of armor and called it a day\\..\\..\\..\\| Oh that's right. He's the guy that made text wrapping work. Huh. too bad we forgot his name. How many people do you think would know him?",
+    "number": {
+      "variable": 2,
+      "digits": 6
+    }
+  },
+
+  "plaque": {
+    "text": "It looks like something fits in here!",
+    "item": {
+      "type": "regular",
+      "variable": 1
+    }
+  },
+
+  "set spanish": {
+    "text": "Congratulations! By the magical power of this thingy, your language has been set to spanish!"
+  },
+  
+  "locked_door": {
+    "text": "Door locked"
+  },
+  
+  "guard_blocked_way": {
+	 "text": "This way is closed, citizen..."
+  }
+}
