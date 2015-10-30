@@ -37,41 +37,6 @@
  *   <book:no>                # This item does not appear in the item book
  */
 
-/*:ja
- * @plugindesc アイテム図鑑です。アイテムの詳細なステータスを表示します。
- * @author Yoji Ojima
- *
- * @param Unknown Data
- * @desc 未確認のアイテムの索引名です。
- * @default ？？？？？？
- *
- * @param Price Text
- * @desc 「価格」の文字列です。
- * @default 価格
- *
- * @param Equip Text
- * @desc 「装備」の文字列です。
- * @default 装備
- *
- * @param Type Text
- * @desc 「タイプ」の文字列です。
- * @default タイプ
- *
- * @help
- *
- * プラグインコマンド:
- *   ItemBook open            # 図鑑画面を開く
- *   ItemBook add weapon 3    # 武器３番を図鑑に追加
- *   ItemBook add armor 4     # 防具４番を図鑑に追加
- *   ItemBook remove armor 5  # 防具５番を図鑑から削除
- *   ItemBook remove item 6   # アイテム６番を図鑑から削除
- *   ItemBook complete        # 図鑑を完成させる
- *   ItemBook clear           # 図鑑をクリアする
- *
- * アイテム（武器、防具）のメモ:
- *   <book:no>                # 図鑑に載せない場合
- */
-
 (function() {
 
     var parameters = PluginManager.parameters('ItemBook');

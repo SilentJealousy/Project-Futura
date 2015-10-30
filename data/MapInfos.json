@@ -1,6 +1,6 @@
 [
 null,
-null,
-null,
-{"id":3,"expanded":false,"name":"Forest Town","order":1,"parentId":0,"scrollX":1109,"scrollY":553.5}
+{"id":1,"expanded":true,"name":"Inn 1F","order":2,"parentId":3,"scrollX":832,"scrollY":640},
+{"id":2,"expanded":false,"name":"Inn 2F","order":3,"parentId":1,"scrollX":832,"scrollY":640},
+{"id":3,"expanded":true,"name":"Forest Town","order":1,"parentId":0,"scrollX":864,"scrollY":1466.5}
 ]
