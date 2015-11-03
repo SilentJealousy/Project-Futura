@@ -1,7 +1,7 @@
-//=============================================================================
+﻿//=============================================================================
 // EnemyBook.js
 //=============================================================================
-
+ 
 /*:
  * @plugindesc v1.03 + SkottyTV Update 03 // Displays detailed statuses of enemys.
  * @author Yoji Ojima (Compatibility with YEP) / + SkottyTV (thx to DragonPC)
@@ -64,7 +64,7 @@
  *
  * ============================================================================
  * SkottyTV Update 01 ->
- *	
+ *  
  * - Decide if enemys will get an entry automaticly when they appear/transform!
  * - Now you can add an Enemy by a variable value!
  * - Able to add a third info line (desc3)!
@@ -116,7 +116,7 @@
  *
  * (X and Y is a number you choose)
  */
-
+ 
 /*:ja
  * @plugindesc モンスター図鑑です。敵キャラの詳細なステータスを表示します。
  * @author Yoji Ojima (Compatibility with YEP) / + SkottyTV (thx to DragonPC)
@@ -179,7 +179,7 @@
  *
  * ============================================================================
  * SkottyTV Update 01 ->
- *	
+ *  
  * - Decide if enemys will get an entry automaticly when they appear/transform!
  * - Now you can add an Enemy by a variable value!
  * - Able to add a third info line (desc3)!
@@ -209,9 +209,9 @@
  *   EnemyBook clear        # 図鑑をクリアする
  *
  * 敵キャラのメモ:
- *   <desc1:なんとか>     	# 説明１行目
- *   <desc2:かんとか>     	# 説明２行目
- *   <desc3:かんとか>    	# 説明3行目
+ *   <desc1:なんとか>         # 説明１行目
+ *   <desc2:かんとか>         # 説明２行目
+ *   <desc3:かんとか>     # 説明3行目
  *   <book:no>              # 図鑑に載せない場合
  *
  * ============================================================================
@@ -231,9 +231,9 @@
  *
  * (X and Y is a number you choose)
  */
-
+ 
 (function() {
-
+ 
     var parameters = PluginManager.parameters('EnemyBook');
     var unknownData = String(parameters['Unknown Data'] || '??????')
     var AutoFill = String(parameters['AutoFill'] || 'false');
@@ -247,7 +247,7 @@
     var ShowStatus = Number(parameters['Show Status Switch']);
     var AnimEnemy = String(parameters['Pulsing Enemy'] || 'true');
     var AnimIntens = Number(parameters['Pulsing Intensity']);
-
+ 
     var _Game_Interpreter_pluginCommand =
             Game_Interpreter.prototype.pluginCommand;
     Game_Interpreter.prototype.pluginCommand = function(command, args) {
@@ -275,31 +275,31 @@
             }
         }
     };
-
+ 
     Game_System.prototype.addToEnemyBook = function(enemyId) {
         if (!this._enemyBookFlags) {
             this.clearEnemyBook();
         }
         this._enemyBookFlags[enemyId] = true;
     };
-
+ 
     Game_System.prototype.removeFromEnemyBook = function(enemyId) {
         if (this._enemyBookFlags) {
             this._enemyBookFlags[enemyId] = false;
         }
     };
-
+ 
     Game_System.prototype.completeEnemyBook = function() {
         this.clearEnemyBook();
         for (var i = 1; i < $dataEnemies.length; i++) {
             this._enemyBookFlags[i] = true;
         }
     };
-
+ 
     Game_System.prototype.clearEnemyBook = function() {
         this._enemyBookFlags = [];
     };
-
+ 
     Game_System.prototype.isInEnemyBook = function(enemy) {
         if (this._enemyBookFlags && enemy) {
             return !!this._enemyBookFlags[enemy.id];
@@ -307,57 +307,57 @@
             return false;
         }
     };
-
+ 
     var _Game_Troop_setup = Game_Troop.prototype.setup;
     Game_Troop.prototype.setup = function(troopId) {
         _Game_Troop_setup.call(this, troopId);
         this.members().forEach(function(enemy) {
             if (enemy.isAppeared()) {
-
+ 
         if (AutoFill === 'true') {
-        	$gameSystem.addToEnemyBook(enemy.enemyId());
-				}
+            $gameSystem.addToEnemyBook(enemy.enemyId());
+                }
             }
         }, this);
     };
-
+ 
     var _Game_Enemy_appear = Game_Enemy.prototype.appear;
     Game_Enemy.prototype.appear = function() {
         _Game_Enemy_appear.call(this);
-	if (AutoFill === 'true') {
-        	$gameSystem.addToEnemyBook(this._enemyId);
-				}
+    if (AutoFill === 'true') {
+            $gameSystem.addToEnemyBook(this._enemyId);
+                }
     };
-
+ 
     var _Game_Enemy_transform = Game_Enemy.prototype.transform;
     Game_Enemy.prototype.transform = function(enemyId) {
         _Game_Enemy_transform.call(this, enemyId);
-	if (AutoFill === 'true') {
-        	$gameSystem.addToEnemyBook(enemyId);
-				}
+    if (AutoFill === 'true') {
+            $gameSystem.addToEnemyBook(enemyId);
+                }
     };
-
+ 
     function Scene_EnemyBook() {
         this.initialize.apply(this, arguments);
     }
-
+ 
     Scene_EnemyBook.prototype = Object.create(Scene_MenuBase.prototype);
     Scene_EnemyBook.prototype.constructor = Scene_EnemyBook;
-
+ 
     Scene_EnemyBook.prototype.initialize = function() {
         Scene_MenuBase.prototype.initialize.call(this);
     };
-
+ 
     Scene_EnemyBook.prototype.create = function() {
-
+ 
         var w3 = Graphics.boxWidth / 3;
         var ww = (Graphics.boxWidth / 3)*2 + 2;
         var wh = Graphics.boxHeight / 5;
-
+ 
         Scene_MenuBase.prototype.create.call(this);
         this._indexWindow = new Window_EnemyBookIndex(0, 0);
         this._indexWindow.setHandler('cancel', this.popScene.bind(this));
-        
+         
         this._statusWindow = new Window_EnemyBookStatus(w3, 0, ww, wh);
         this._statusWindow2 = new Window_EnemyBookStatus2(w3, wh, ww, wh*2.5);
         this._statusWindow3 = new Window_EnemyBookStatus3(w3, wh*3.5, ww, wh*2);
@@ -369,35 +369,35 @@
         this._indexWindow.setStatusWindow2(this._statusWindow2);
         this._indexWindow.setStatusWindow3(this._statusWindow3);
     };
-
+ 
     function Window_EnemyBookIndex() {
         this.initialize.apply(this, arguments);
     }
-
+ 
     Window_EnemyBookIndex.prototype = Object.create(Window_Selectable.prototype);
     Window_EnemyBookIndex.prototype.constructor = Window_EnemyBookIndex;
-
+ 
     Window_EnemyBookIndex.lastTopRow = 0;
     Window_EnemyBookIndex.lastIndex  = 0;
-
+ 
     Window_EnemyBookIndex.prototype.initialize = function(x, y) {
         var width = Graphics.boxWidth / 3;
-        
+         
     if (IndexHeight === 'true') {
         var height = Graphics.boxHeight / 2;
     }
     else{
         var height = Graphics.boxHeight;
     }
-        
-        
+         
+         
     Window_Selectable.prototype.initialize.call(this, x, y, width, height);
         this.refresh();
         this.setTopRow(Window_EnemyBookIndex.lastTopRow);
         this.select(Window_EnemyBookIndex.lastIndex);
         this.activate();
     };
-
+ 
     Window_EnemyBookIndex.prototype.maxCols = function() {
         if (listEnemysRow > 4) {
             return 4;
@@ -406,11 +406,11 @@
             return listEnemysRow;
         }
     };
-
+ 
     Window_EnemyBookIndex.prototype.maxItems = function() {
         return this._list ? this._list.length : 0;
     };
-
+ 
     Window_EnemyBookIndex.prototype.setStatusWindow = function(statusWindow) {
         this._statusWindow = statusWindow;
         this.updateStatus();
@@ -423,12 +423,12 @@
         this._statusWindow3 = statusWindow3;
         this.updateStatus();
     };
-
+ 
     Window_EnemyBookIndex.prototype.update = function() {
         Window_Selectable.prototype.update.call(this);
         this.updateStatus();
     };
-
+ 
     Window_EnemyBookIndex.prototype.updateStatus = function() {
         if (this._statusWindow) {
             var enemy = this._list[this.index()];
@@ -443,7 +443,7 @@
             this._statusWindow3.setEnemy(enemy);
         }
     };
-
+ 
     Window_EnemyBookIndex.prototype.refresh = function() {
         this._list = [];
         for (var i = 1; i < $dataEnemies.length; i++) {
@@ -455,29 +455,29 @@
         this.createContents();
         this.drawAllItems();
     };
-
+ 
     Window_EnemyBookIndex.prototype.drawItem = function(index) {
         var enemy = this._list[index];
         var rect = this.itemRectForText(index);
         var name;
         if ($gameSystem.isInEnemyBook(enemy)) {
-		if (IDatName === 'true') {	
-            		name = enemy.id + " - " + enemy.name;
-		} else {
-	    		name = enemy.name;
-		     }
+        if (IDatName === 'true') {  
+                    name = enemy.id + " - " + enemy.name;
+        } else {
+                name = enemy.name;
+             }
         } else {
             name = unknownData;
         }
         this.drawText(name, rect.x, rect.y, rect.width);
     };
-
+ 
     Window_EnemyBookIndex.prototype.processCancel = function() {
         Window_Selectable.prototype.processCancel.call(this);
         Window_EnemyBookIndex.lastTopRow = this.topRow();
         Window_EnemyBookIndex.lastIndex = this.index();
     };
-
+ 
     function Window_EnemyBookStatus() {
         this.initialize.apply(this, arguments);
     }
@@ -487,17 +487,17 @@
     function Window_EnemyBookStatus3() {
         this.initialize.apply(this, arguments);
     }
-
+ 
     Window_EnemyBookStatus.prototype = Object.create(Window_Base.prototype);
     Window_EnemyBookStatus.prototype.constructor = Window_EnemyBookStatus;
-    
+     
     Window_EnemyBookStatus2.prototype = Object.create(Window_Base.prototype);
     Window_EnemyBookStatus2.prototype.constructor = Window_EnemyBookStatus2;
-    
+     
     Window_EnemyBookStatus3.prototype = Object.create(Window_Base.prototype);
     Window_EnemyBookStatus3.prototype.constructor = Window_EnemyBookStatus3;
-
-    
+ 
+     
     Window_EnemyBookStatus2.prototype.initialize = function(x, y, width, height) {
         Window_Base.prototype.initialize.call(this, x, y, width, height);
         this._enemy = null;
@@ -509,7 +509,7 @@
         this.addChildToBack(this._enemySprite);
         this.refresh();
     };
-
+ 
     Window_EnemyBookStatus.prototype.setEnemy = function(enemy) {
         if (this._enemy !== enemy) {
             this._enemy = enemy;
@@ -528,26 +528,26 @@
             this.refresh();
         }
     };
-    
-    if (AnimEnemy === 'true') {	
+     
+    if (AnimEnemy === 'true') { 
     Window_EnemyBookStatus2.prototype.update = function() {
         Window_Base.prototype.update.call(this);
         if (this._enemySprite.bitmap) {
             var bitmapHeight = this._enemySprite.bitmap.height;
             var contentsHeight = this.contents.height;
-            
+             
                 var scalex = (Math.cos(Graphics.frameCount*0.01))/AnimIntens;
                 var scaley = ((Math.cos(Graphics.frameCount*0.01))/AnimIntens);
-            
+             
             this._enemySprite.scale.x = (scalex*scalex)+0.9;
             this._enemySprite.scale.y = (scaley*scaley)+0.9;
-            
+             
             if (bitmapHeight > contentsHeight) {
                 this._enemySprite.scale.x = ((scalex*scalex)+0.9)-0.2;
                 this._enemySprite.scale.y = ((scaley*scaley)+0.9)-0.2;
             }
         }
-
+ 
     };
     }
     else {
@@ -556,34 +556,34 @@
         if (this._enemySprite.bitmap) {
             var bitmapHeight = this._enemySprite.bitmap.height;
             var contentsHeight = this.contents.height;
-            
+             
                 var scale = 1;
-            
+             
             this._enemySprite.scale.x = scale;
             this._enemySprite.scale.y = scale;
-            
+             
             if (bitmapHeight > contentsHeight) {
                 this._enemySprite.scale.x = contentsHeight/bitmapHeight;
                 this._enemySprite.scale.y = contentsHeight/bitmapHeight;
             }
         }
-
+ 
     };
     }
-
+ 
     Window_EnemyBookStatus.prototype.refresh = function() {
-        
+         
         this.contents.clear();
-        
+         
         var enemy = this._enemy;
         var x = 0;
         var y = 0;
         var lineHeight = this.lineHeight();
-        
+         
         if (!enemy || !$gameSystem.isInEnemyBook(enemy)) {
             return;
         }
-        
+         
         var descWidth = 1;
         x = 1;
         y = 0; //lineHeight*9
@@ -591,21 +591,21 @@
         this.drawTextEx(enemy.meta.desc2, x, (y + lineHeight * 1)-8, descWidth);
         this.drawTextEx(enemy.meta.desc3, x, (y + lineHeight * 2)-16, descWidth);
     };
-    
+     
     Window_EnemyBookStatus2.prototype.refresh = function() {
-        
+         
         this.contents.clear();
-        
+         
         var enemy = this._enemy;
         var x = 0;
         var y = 0;
         var lineHeight = this.lineHeight();
-
+ 
         if (!enemy || !$gameSystem.isInEnemyBook(enemy)) {
             this._enemySprite.bitmap = null;
             return;
         }
-
+ 
         var name = enemy.battlerName;
         var hue = enemy.battlerHue;
         var bitmap;
@@ -614,15 +614,15 @@
         } else {
             bitmap = ImageManager.loadEnemy(name, hue);
         }
-        
+         
         this._enemySprite.bitmap = bitmap;
-        
+         
         this.resetTextColor();
-
+ 
         var rewardsWidth = 280;
         x = 1;
         y += lineHeight*1;
-        
+         
         if ($gameSwitches.value(ShowItems) === true || ShowItems === 0) {
         for (var j = 0; j < enemy.dropItems.length; j++) {
             var di = enemy.dropItems[j];
@@ -639,72 +639,72 @@
                 this.resetTextColor();
             }
         }
-        
+         
         this.resetTextColor();
         }
-        
+         
         x = (Graphics.boxWidth/3)*2 - this.textWidth(TextManager.expA) - 45
         y = (Graphics.boxHeight/5)*2 - lineHeight
-        
+         
         if ($gameSwitches.value(ShowEXP) === true || ShowEXP === 0) {
-
+ 
             this.changeTextColor(this.systemColor());
             this.drawText(TextManager.expA, x, y);
-
+ 
             this.resetTextColor();
             this.drawText(enemy.exp, x - this.textWidth(enemy.exp + ' '), y);
         }
-        
+         
         if ($gameSwitches.value(ShowGold) === true || ShowGold === 0) {
             this.changeTextColor(this.systemColor());
-        
-            if (goldIcon === 'true') {	
+         
+            if (goldIcon === 'true') {  
                 this.drawIcon(Yanfly.Icon.Gold, x, y + lineHeight)
             } else {
                 this.drawText(TextManager.currencyUnit, x, y + lineHeight);
             }
-
+ 
             this.resetTextColor();
             this.drawText(enemy.gold, x - this.textWidth(enemy.gold + ' '), y + lineHeight);
         }
-
+ 
     }
-    
-    
+     
+     
     Window_EnemyBookStatus3.prototype.refresh = function() {
-        
+         
         this.contents.clear();
-        
+         
         if ($gameSwitches.value(ShowStatus) === true || ShowStatus === 0) {
         var enemy = this._enemy;
         var x = 0;
         var y = 0;
         var lineHeight = this.lineHeight();
-        
+         
         if (!enemy || !$gameSystem.isInEnemyBook(enemy)) {
             return;
         }
-            
+             
             this.drawText('--- ' + TextManager.status + ' ---', (Graphics.boxWidth/3) - (this.textWidth('--- ' + TextManager.status + ' ---')/2), -10, 160);
             this.resetTextColor();  
-
+ 
         this.resetTextColor();
-
+ 
         x = (Graphics.boxWidth/3) - 235
         y = 25;
-
+ 
         var arr = [TextManager.param(0), TextManager.param(1), TextManager.param(2), TextManager.param(3)];
-
+ 
         var lgth = 0;
         var longest;
-
+ 
         for(var i=0; i < arr.length; i++){
             if(arr[i].length > lgth){
                 var lgth = arr[i].length;
                 longest = arr[i];
             }      
         }
-        
+         
         for (var i = 0; i < 4; i++) {
             this.changeTextColor(this.systemColor());
             this.drawText(TextManager.param(i), x, y, 160);
@@ -712,23 +712,23 @@
             this.drawText(enemy.params[i], x + this.textWidth(longest + '  '), y, 60, 'left');
             y += lineHeight;
         }
-        
+         
         y = 25;
-        
+         
         var arr = [TextManager.param(4), TextManager.param(5), TextManager.param(6), TextManager.param(7)];
-
+ 
         var lgth = 0;
         var longest2;
-
+ 
         for(var i=0; i < arr.length; i++){
             if(arr[i].length > lgth){
                 var lgth = arr[i].length;
                 longest2 = arr[i];
             }      
         }
-        
+         
         x = x + 10 + this.textWidth(longest + '  ') + 90
-        
+         
         for (var i = 4; i < 8; i++) {
             this.changeTextColor(this.systemColor());
             this.drawText(TextManager.param(i), x, y, 160);
@@ -736,9 +736,9 @@
             this.drawText(enemy.params[i], x + this.textWidth(longest2 + '  '), y, 60, 'left');
             y += lineHeight;
         }
-        
-
+         
+ 
     }
     }
-
+ 
 })();
